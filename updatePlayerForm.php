@@ -60,8 +60,8 @@ include 'parts/header.php';
         var_dump($_GET['id']);
         var_dump($player_id);
         $request = $pdo->prepare(
-            'UPDATE players SET name = :A, first_name = :B, age = :C, position = :D 
-            WHERE player_id = $player_id');
+            "UPDATE players SET name = :A, first_name = :B, age = :C, position = :D 
+            WHERE player_id = $player_id");
                     var_dump($_GET['id']);
                     var_dump($player_id);
         $request->execute([
