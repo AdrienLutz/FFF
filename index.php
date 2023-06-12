@@ -4,8 +4,6 @@ include 'parts/header.php';
 ?>
 
 
-
-
 <h4>The lucky 23</h4>
 
 <section>
