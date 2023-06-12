@@ -1,7 +1,11 @@
 <?php
 include 'parts/functions.php';
 include 'parts/header.php';
+
+
 ?>
+
+
 <h3>Add a player</h3>
 <!------------------- I. AFFICHAGE ------------------->
 <section class="my-3" id="affichage">
@@ -56,7 +60,7 @@ include 'parts/header.php';
             </form>
 
             <div class="my-3">
-            <a href="restricted.php"><input class="add_submit" type="submit" value="See your team ! "></a>   
+                <a href="restricted.php"><input class="add_submit" type="submit" value="See your team ! "></a>
             </div>
 
 
@@ -68,17 +72,38 @@ include 'parts/header.php';
 <section class="my-3" id="insertion">
 
     <?php
+    $errors = [];
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        // requête préparée pour insérer les valeurs dans les colonnes concernées
-        $request = $pdo->prepare('INSERT INTO players (name, first_name, age, position) VALUES (:A, :B, :C, :D)');
+        if (empty($_POST["name"])) {
+            $errors["name"] = 'Veuillez saisir un nom';
+        }
 
-        //déclaration des paramètres
-        $request->execute([
-            "A" => $_POST["name"],
-            "B" => $_POST["first_name"],
-            "C" => $_POST["age"],
-            "D" => $_POST["position"]
-        ]);
+        if (empty($_POST["first_name"])) {
+            $errors["first_name"] = 'Veuillez saisir un prénom';
+        }
+
+        if (empty($_POST["first_name"])) {
+            $errors["age"] = 'Veuillez saisir un âge';
+        }
+
+        if (empty($_POST["position"])) {
+            $errors["position"] = 'Veuillez saisir une position';
+        }
+
+        if (count($errors) == 0) {
+            // requête préparée pour insérer les valeurs dans les colonnes concernées
+            $request = $pdo->prepare('INSERT INTO players (name, first_name, age, position, img) VALUES (:A, :B, :C, :D, :E)');
+
+            //déclaration des paramètres
+            $request->execute([
+                "A" => $_POST["name"],
+                "B" => $_POST["first_name"],
+                "C" => $_POST["age"],
+                "D" => $_POST["position"],
+                "E" => "upload/foot.png",
+            ]);
+            header('Location: restricted.php');
+        }
     }
     ?>
 

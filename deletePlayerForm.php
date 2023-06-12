@@ -1,6 +1,12 @@
 <?php
 include 'parts/functions.php';
 include 'parts/header.php';
+session_start();
+if(array_key_exists("email", $_SESSION)){
+    header('Location: restricted.php');
+} else {
+    header('Location: login.php');
+}
 ?>
 <h2>Delete a player</h2>
 <p>Attention la suppression est immédiate !</p> 

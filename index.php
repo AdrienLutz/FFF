@@ -1,6 +1,7 @@
 <?php
 include 'parts/functions.php';
 include 'parts/header.php';
+
 ?>
 
 
@@ -21,6 +22,7 @@ include 'parts/header.php';
                     <p>First_name : <a class="card_link"><?php echo $player["first_name"] ?></a></p>
                     <p>Age : <a class="card_link"><?php echo $player["age"] ?></a></p>
                     <p>Position : <a class="card_link"><?php echo $player["position"] ?></a></p>
+                    <img src="http://localhost/fff/<?php echo $player["img"] ?>" alt="" width="175" height="175">
                 </div>
             <?php endforeach; ?>
         </div>
