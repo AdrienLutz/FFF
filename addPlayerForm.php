@@ -1,6 +1,6 @@
 <?php
-include '../parts/functions.php';
-include '../parts/header.php';
+include 'parts/functions.php';
+include 'parts/header.php';
 ?>
 <h3>Add a player</h3>
 <!------------------- I. AFFICHAGE ------------------->
@@ -31,7 +31,7 @@ include '../parts/header.php';
 
                     <div class="col-4">
                         <label for="age"> Age : </label>
-                        <textarea type="number" min="16" max="40" name="age" value="" placeholder="22"></textarea>
+                        <input type="number" min="16" max="40" name="age" value="" placeholder="22"></input>
                     </div>
 
                     <div class="col-4">
@@ -55,6 +55,10 @@ include '../parts/header.php';
                 </div>
             </form>
 
+            <div class="my-3">
+            <a href="restricted.php"><input class="add_submit" type="submit" value="See your team ! "></a>   
+            </div>
+
 
         </div>
     </div>
@@ -66,13 +70,14 @@ include '../parts/header.php';
     <?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // requête préparée pour insérer les valeurs dans les colonnes concernées
-        $request = $pdo->prepare('INSERT INTO players (player_name, player_price, img) VALUES (:A, :B, :C)');
+        $request = $pdo->prepare('INSERT INTO players (name, first_name, age, position) VALUES (:A, :B, :C, :D)');
 
         //déclaration des paramètres
         $request->execute([
-            "A" => $_POST["player_name"],
-            "B" => $_POST["player_price"],
-            "C" => $_POST["img"],
+            "A" => $_POST["name"],
+            "B" => $_POST["first_name"],
+            "C" => $_POST["age"],
+            "D" => $_POST["position"]
         ]);
     }
     ?>
@@ -81,5 +86,5 @@ include '../parts/header.php';
 </section>
 
 <?php
-include '../parts/footer.php';
+include 'parts/footer.php';
 ?>

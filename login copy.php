@@ -5,11 +5,11 @@ require 'parts/functions.php';
 $errors = [];
 if($_SERVER["REQUEST_METHOD"] == 'POST'){
     if(empty($_POST["email"])){
-        $errors["email"] = 'Veuillez saisir un identifiant';
+        $errors["email"] = 'Veuillez saisir un email';
     }
-    // if(!filter_var($_POST["email"])){
-    //     $errors["email"] = "L'identifiant n'est pas valide";
-    // }
+    if(!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
+        $errors["email"] = "L'email n'est pas valide";
+    }
     if(empty($_POST["password"])){
         $errors["password"] = 'Veuillez saisir un mot de passe';
     }
@@ -17,11 +17,10 @@ if($_SERVER["REQUEST_METHOD"] == 'POST'){
         $stmt = $pdo->prepare(
                 'SELECT * FROM manager WHERE email = :email');
         $stmt->bindParam(':email', $_POST["email"]);
-        var_dump($_POST["email"]);
         $stmt->execute();
         $res = $stmt->fetch();
         // la variable $res prend pour valeur les mails des users
-var_dump($res);
+
         // si un email n'exsite pas, $res prend pour valeur "false"
         // et si le mdp ne correspond pas, on renvoie un message d'erreur
         if(!$res || !password_verify($_POST["password"], $res["password"])){
@@ -34,7 +33,7 @@ var_dump($res);
             // Le hash correspond, c'est ok
             // J'ajoute la session et je redirige l'utilisateur
         }
-        // var_dump($res);
+        var_dump($res);
         die();
     }
 }
@@ -119,6 +118,7 @@ Vous devez dabord vous connecter ...
 <input type="submit" class="btn btn-success mt-3">
 </form>
 
+<a href="register.php">M'enregistrer</a>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 
